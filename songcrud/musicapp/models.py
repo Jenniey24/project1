@@ -1,14 +1,40 @@
 from django.db import models
 
-# Create your models here.
-class Song(models.Model):
-    title= models.TextField()
-    artist= models.TextField()
-    image= models.ImageField()
-    audio_file = models.FileField(blank=True,null=True)
-    audio_link = models.CharField(max_length=200,blank=True,null=True)
-    duration=models.CharField(max_length=20)
-    paginate_by = 2
 
-    def __str__(self):
-        return self.title
+
+# Create your models here.
+
+class Artiste(models.Model):
+
+    artiste_id = models.CharField(max_length=25,primary_key=True, serialize=True)
+
+    first_name = models.CharField(max_length=100)
+
+    last_name = models.CharField(max_length=100)
+
+    age = models.IntegerField(default= NULL)
+
+    
+
+class Song(models.Model):
+
+    title = models.CharField(max_length=100)
+
+    release_date = models.DateField() 
+
+    likes = models.IntegerField()
+
+    artiste_id = models.ForeignKey(Artiste, on_delete=models.CASCADE)
+
+
+
+
+
+
+
+class Lyric(models.Model):
+
+    content = models.CharField(max_length=256)
+
+    song_id = models.ForeignKey(Song, on_delete=models.CASCADE)
+
